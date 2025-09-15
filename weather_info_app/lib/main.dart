@@ -24,9 +24,13 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   final _rng = Random();
   final _conditions = const ['Sunny', 'Cloudy', 'Rainy', 'Windy', 'Stormy'];
 
+  // Today
   String city = '—';
   String temp = '—';
   String condition = '—';
+
+  // 7-day
+  List<Map<String, String>> forecast = [];
 
   void _fetchToday() {
     final c = _cityCtrl.text.trim();
@@ -35,6 +39,21 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       city = c;
       temp = '${15 + _rng.nextInt(16)} °C';
       condition = _conditions[_rng.nextInt(_conditions.length)];
+    });
+  }
+
+  void _fetch7Day() {
+    final c = _cityCtrl.text.trim();
+    if (c.isEmpty) return;
+    setState(() {
+      city = c;
+      forecast = List.generate(7, (i) {
+        return {
+          'day': 'Day ${i + 1}',
+          'temp': '${15 + _rng.nextInt(16)} °C',
+          'condition': _conditions[_rng.nextInt(_conditions.length)],
+        };
+      });
     });
   }
 
@@ -67,9 +86,22 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: _fetchToday,
-                    child: const Text('Fetch Today'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _fetchToday,
+                          child: const Text('Fetch Today'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: _fetch7Day,
+                          child: const Text('Fetch 7-Day'),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                   Text('City: $city', style: const TextStyle(fontSize: 16)),
@@ -78,8 +110,36 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                 ],
               ),
             ),
-            // 7-DAY TAB (placeholder for now)
-            const Center(child: Text('7-day forecast coming in feature branch')),
+            // 7-DAY TAB
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: forecast.isEmpty
+                  ? const Center(child: Text('Tap "Fetch 7-Day" on Today tab'))
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('7-Day Forecast for $city',
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 12),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: forecast.length,
+                            itemBuilder: (context, i) {
+                              final d = forecast[i];
+                              return Card(
+                                child: ListTile(
+                                  leading: Text(d['day']!),
+                                  title: Text(d['temp']!),
+                                  subtitle: Text(d['condition']!),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
           ],
         ),
       ),
