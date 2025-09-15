@@ -67,13 +67,15 @@ class __TabsNonScrollableDemoState extends State<_TabsNonScrollableDemo>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'Tabs Demo',
+          'Digital Pets',
         ),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: false,
           tabs: [
-            for (final tab in tabs) Tab(text: tab),
+            Tab(text: "Pikachu"),
+            Tab(text: "Kirby"),
+            Tab(text: "Squirtle"),
           ],
         ),
       ),
@@ -81,10 +83,16 @@ class __TabsNonScrollableDemoState extends State<_TabsNonScrollableDemo>
         controller: _tabController,
         children: [
 // hint for the to do task:Considering creating the different for different tabs
-          for (final tab in tabs)
-            Center(
-              child: Text(tab),
-            ),
+
+          Center(
+            child: Image(image: AssetImage('assets/pikachu.png'), width: 400, height: 400),
+          ),
+          Center(
+            child: Image(image: AssetImage('assets/kirby.png'), width: 400, height: 400),
+          ),
+          Center(
+            child: Image(image: AssetImage('assets/squirtle.png'), width: 400, height: 400),
+          ),
         ],
       ),
     );
