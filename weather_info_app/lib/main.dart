@@ -39,6 +39,7 @@ class _WeatherInfoPageState extends State<WeatherInfoPage> {
   }
 
   void _simulateFetchWeather() {
+    FocusScope.of(context).unfocus();
     final city = _cityController.text.trim();
     if (city.isEmpty) {
       ScaffoldMessenger.of(context)
@@ -68,6 +69,8 @@ class _WeatherInfoPageState extends State<WeatherInfoPage> {
           children: [
             TextField(
               controller: _cityController,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _simulateFetchWeather(),
               decoration: const InputDecoration(
                 labelText: 'City Name',
                 hintText: 'Enter city',
