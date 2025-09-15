@@ -28,7 +28,6 @@ class WeatherInfoPage extends StatefulWidget {
 class _WeatherInfoPageState extends State<WeatherInfoPage> {
   final TextEditingController _cityController = TextEditingController();
 
-  // Step 3: Simulated weather state (not yet displayed)
   String? _simCity;
   int? _simTempC;
   String? _simCondition;
@@ -81,12 +80,13 @@ class _WeatherInfoPageState extends State<WeatherInfoPage> {
               child: const Text('Fetch Weather'),
             ),
             const SizedBox(height: 24),
-            // Step 4 will display these values
-            const Text('City: —', style: TextStyle(fontSize: 16)),
+            Text('City: ${_simCity ?? '—'}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
-            const Text('Temperature: — °C', style: TextStyle(fontSize: 16)),
+            Text('Temperature: ${_simTempC?.toString() ?? '—'} °C',
+                style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
-            const Text('Condition: —', style: TextStyle(fontSize: 16)),
+            Text('Condition: ${_simCondition ?? '—'}',
+                style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),
