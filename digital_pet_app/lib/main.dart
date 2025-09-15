@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: _TabsNonScrollableDemo(),
       ),
     );
@@ -41,7 +41,7 @@ class __TabsNonScrollableDemoState extends State<_TabsNonScrollableDemo>
     super.initState();
     _tabController = TabController(
       initialIndex: 0,
-      length: 3,
+      length: 4,
       vsync: this,
     );
     _tabController.addListener(() {
@@ -61,30 +61,31 @@ class __TabsNonScrollableDemoState extends State<_TabsNonScrollableDemo>
   @override
   Widget build(BuildContext context) {
 // For the To do task hint: consider defining the widget and name of the tabs here
-    final tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
+    final tabs = ['Pikachu', 'Kirby', 'Squirtle', 'Yoshi'];
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'Tabs Demo',
+          'Digital Pets',
         ),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: false,
           tabs: [
-            for (final tab in tabs) Tab(text: tab),
-          ],
+            for (final tab in tabs) Tab(text: tab)
+          ]
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
 // hint for the to do task:Considering creating the different for different tabs
-          for (final tab in tabs)
+
+          for (final tab in tabs) 
             Center(
-              child: Text(tab),
-            ),
+              child: Image(image: AssetImage('assets/$tab.png'), width: 400, height: 400)
+            )
         ],
       ),
     );
