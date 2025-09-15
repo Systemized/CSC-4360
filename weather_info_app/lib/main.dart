@@ -1,95 +1,42 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(WeatherApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather Info App',
-      theme: ThemeData(colorSchemeSeed: Colors.blue, useMaterial3: true),
-      home: const WeatherInfoPage(),
+      title: 'Weather Info',
+      theme: ThemeData(primarySwatch: Colors.teal),
+      home: WeatherHomePage(),
     );
   }
 }
 
-class WeatherInfoPage extends StatefulWidget {
-  const WeatherInfoPage({super.key});
-
+class WeatherHomePage extends StatefulWidget {
   @override
-  State<WeatherInfoPage> createState() => _WeatherInfoPageState();
+  State<WeatherHomePage> createState() => _WeatherHomePageState();
 }
 
-class _WeatherInfoPageState extends State<WeatherInfoPage> {
-  final TextEditingController _cityController = TextEditingController();
-
-  String? _simCity;
-  int? _simTempC;
-  String? _simCondition;
-
-  @override
-  void dispose() {
-    _cityController.dispose();
-    super.dispose();
-  }
-
-  void _simulateFetchWeather() {
-    FocusScope.of(context).unfocus();
-    final city = _cityController.text.trim();
-    if (city.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Please enter a city')));
-      return;
-    }
-    final rand = Random();
-    final temp = 15 + rand.nextInt(16); // 15..30
-    const conditions = ['Sunny', 'Cloudy', 'Rainy'];
-    final condition = conditions[rand.nextInt(conditions.length)];
-
-    setState(() {
-      _simCity = city;
-      _simTempC = temp;
-      _simCondition = condition;
-    });
-  }
-
+class _WeatherHomePageState extends State<WeatherHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Weather Info')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Weather Info'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Today', icon: Icon(Icons.wb_sunny)),
+              Tab(text: '7-Day', icon: Icon(Icons.calendar_view_week)),
+            ],
+          ),
+        ),
+        body: const TabBarView(
           children: [
-            TextField(
-              controller: _cityController,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _simulateFetchWeather(),
-              decoration: const InputDecoration(
-                labelText: 'City Name',
-                hintText: 'Enter city',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: _simulateFetchWeather,
-              child: const Text('Fetch Weather'),
-            ),
-            const SizedBox(height: 24),
-            Text('City: ${_simCity ?? '—'}', style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 8),
-            Text('Temperature: ${_simTempC?.toString() ?? '—'} °C',
-                style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 8),
-            Text('Condition: ${_simCondition ?? '—'}',
-                style: const TextStyle(fontSize: 16)),
+            Center(child: Text('Today tab - coming soon')),
+            Center(child: Text('7-Day tab - coming soon')),
           ],
         ),
       ),
