@@ -85,7 +85,7 @@ class _WeatherInfoPageState extends State<WeatherInfoPage> {
             const SizedBox(height: 24),
             Text('City: ${_simCity ?? '—'}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
-            Text('Temperature: ${_simTempC?.toString() ?? '—'} °C',
+            Text('Temperature: ${_simTempC?.toString() ?? '—'} °F',
                 style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
             Text('Condition: ${_simCondition ?? '—'}',
